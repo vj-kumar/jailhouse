@@ -3,7 +3,10 @@
  *
  * Configuration for Pine64+ board, 2 GB
  *
- * Copyright (c) Vijai Kumar K <vijaikumar.kanagarjan@gmail.com>, 2019
+ * Copyright (c) Vijai Kumar K, 2019
+ *
+ * Authors:
+ *  Vijai Kumar K <vijaikumar.kanagarajan@gmail.com>
  *
  * This work is licensed under the terms of the GNU GPL, version 2.  See
  * the COPYING file in the top-level directory.
@@ -15,7 +18,7 @@
 struct {
 	struct jailhouse_system header;
 	__u64 cpus[1];
-	struct jailhouse_memory mem_regions[5];
+	struct jailhouse_memory mem_regions[3];
 	struct jailhouse_irqchip irqchips[1];
 	struct jailhouse_pci_device pci_devices[1];
 } __attribute__((packed)) config = {
@@ -58,37 +61,23 @@ struct {
 	},
 
 	.mem_regions = {
-		/* MMIO (permissive) */ {
-			.phys_start = 0xf4100000,
-			.virt_start = 0xf4100000,
-			.size =	      0x00008000,
-			.flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
-				JAILHOUSE_MEM_IO,
-		},
-		/* MMIO (permissive) */ {
-			.phys_start = 0xf7000000,
-			.virt_start = 0xf7000000,
-			.size =	      0x01100000,
-			.flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
-				JAILHOUSE_MEM_IO,
-		},
-		/* RAM + mailbox? (permissive) */ {
-			.phys_start = 0x0,
-			.virt_start = 0x0,
-			.size = 0x7c000000,
-			.flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
-				JAILHOUSE_MEM_EXECUTE,
-		},
-		/* SRAM */ {
-			.phys_start = 0xfff80000,
-			.virt_start = 0xfff80000,
-			.size = 0x12000,
+                /* MMIO (permissive) */ {
+                        .phys_start = 0x00000000,
+                        .virt_start = 0x00000000,
+                        .size =       0x40000000,
+                        .flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
+                                JAILHOUSE_MEM_IO,
+                },
+		/* RAM (permissive) */ {
+			.phys_start = 0x40000000,
+			.virt_start = 0x40000000,
+			.size = 0xbc000000,
 			.flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
 				JAILHOUSE_MEM_EXECUTE,
 		},
 		/* IVSHMEM shared memory region */ {
-			.phys_start = 0x7bf00000,
-			.virt_start = 0x7bf00000,
+			.phys_start = 0xbbf00000,
+			.virt_start = 0xbbf00000,
 			.size = 0x100000,
 			.flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE,
 		},
