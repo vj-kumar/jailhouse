@@ -18,7 +18,7 @@
 struct {
 	struct jailhouse_system header;
 	__u64 cpus[1];
-	struct jailhouse_memory mem_regions[3];
+	struct jailhouse_memory mem_regions[35];
 	struct jailhouse_irqchip irqchips[1];
 	struct jailhouse_pci_device pci_devices[1];
 } __attribute__((packed)) config = {
@@ -61,14 +61,238 @@ struct {
 	},
 
 	.mem_regions = {
-                /* MMIO (permissive) */ {
-                        .phys_start = 0x00000000,
-                        .virt_start = 0x00000000,
-                        .size =       0x40000000,
+                /* SRAM */ {
+                        .phys_start = 0x00018000,
+                        .virt_start = 0x00018000,
+                        .size =       0x00028000,
+                        .flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
+                                JAILHOUSE_MEM_EXECUTE,
+                },
+                /* Clock */ {
+                        .phys_start = 0x01000000,
+                        .virt_start = 0x01000000,
+                        .size =       0x00100000,
                         .flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
                                 JAILHOUSE_MEM_IO,
                 },
-		/* RAM (permissive) */ {
+                /* 1100000.mixer */ {
+                        .phys_start = 0x01100000,
+                        .virt_start = 0x01100000,
+                        .size =       0x00100000,
+                        .flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
+                                JAILHOUSE_MEM_IO,
+                },
+                /* 1200000.mixer */ {
+                        .phys_start = 0x01200000,
+                        .virt_start = 0x01200000,
+                        .size =       0x00100000,
+                        .flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
+                                JAILHOUSE_MEM_IO,
+                },
+                /* Syscon */ {
+                        .phys_start = 0x01c00000,
+                        .virt_start = 0x01c00000,
+                        .size =       0x00001000,
+                        .flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
+                                JAILHOUSE_MEM_IO,
+                },
+                /* DMA */ {
+                        .phys_start = 0x01c02000,
+                        .virt_start = 0x01c02000,
+                        .size =       0x00001000,
+                        .flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
+                                JAILHOUSE_MEM_IO,
+                },
+                /* LCD1 */ {
+                        .phys_start = 0x01c0c000,
+                        .virt_start = 0x01c0c000,
+                        .size =       0x00001000,
+                        .flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
+                                JAILHOUSE_MEM_IO,
+                },
+                /* LCD2 */ {
+                        .phys_start = 0x01c0d000,
+                        .virt_start = 0x01c0d000,
+                        .size =       0x00001000,
+                        .flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
+                                JAILHOUSE_MEM_IO,
+                },
+                /* MMC */ {
+                        .phys_start = 0x01c0f000,
+                        .virt_start = 0x01c0f000,
+                        .size =       0x00001000,
+                        .flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
+                                JAILHOUSE_MEM_IO,
+                },
+                /* EEPROM */ {
+                        .phys_start = 0x01c14000,
+                        .virt_start = 0x01c14000,
+                        .size =       0x00000400,
+                        .flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
+                                JAILHOUSE_MEM_IO,
+                },
+                /* USB */ {
+                        .phys_start = 0x01c19000,
+                        .virt_start = 0x01c19000,
+                        .size =       0x00000400,
+                        .flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
+                                JAILHOUSE_MEM_IO,
+                },
+                /* USB */ {
+                        .phys_start = 0x01c19400,
+                        .virt_start = 0x01c19400,
+                        .size =       0x00000014,
+                        .flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
+                                JAILHOUSE_MEM_IO,
+                },
+                /* USB */ {
+                        .phys_start = 0x01c1a000,
+                        .virt_start = 0x01c1a000,
+                        .size =       0x00000100,
+                        .flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
+                                JAILHOUSE_MEM_IO,
+                },
+                /* USB */ {
+                        .phys_start = 0x01c1a400,
+                        .virt_start = 0x01c1a400,
+                        .size =       0x00000100,
+                        .flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
+                                JAILHOUSE_MEM_IO,
+                },
+                /* USB */ {
+                        .phys_start = 0x01c1a800,
+                        .virt_start = 0x01c1a800,
+                        .size =       0x00000100,
+                        .flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
+                                JAILHOUSE_MEM_IO,
+                },
+                /* USB */ {
+                        .phys_start = 0x01c1b000,
+                        .virt_start = 0x01c1b000,
+                        .size =       0x00000100,
+                        .flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
+                                JAILHOUSE_MEM_IO,
+                },
+                /* USB */ {
+                        .phys_start = 0x01c1b400,
+                        .virt_start = 0x01c1b400,
+                        .size =       0x00000100,
+                        .flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
+                                JAILHOUSE_MEM_IO,
+                },
+                /* USB */ {
+                        .phys_start = 0x01c1b800,
+                        .virt_start = 0x01c1b800,
+                        .size =       0x00000004,
+                        .flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
+                                JAILHOUSE_MEM_IO,
+                },
+                /* Clock */ {
+                        .phys_start = 0x01c20000,
+                        .virt_start = 0x01c20000,
+                        .size =       0x00000400,
+                        .flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
+                                JAILHOUSE_MEM_IO,
+                },
+                /* Pincontrol */ {
+                        .phys_start = 0x01c20800,
+                        .virt_start = 0x01c20800,
+                        .size =       0x00000400,
+                        .flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
+                                JAILHOUSE_MEM_IO,
+                },
+                /* Watchdog */ {
+                        .phys_start = 0x01c20ca0,
+                        .virt_start = 0x01c20ca0,
+                        .size =       0x00000020,
+                        .flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
+                                JAILHOUSE_MEM_IO,
+                },
+                /* UART */ {
+                        .phys_start = 0x01c28000,
+                        .virt_start = 0x01c28000,
+                        .size =       0x00000020,
+                        .flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
+                                JAILHOUSE_MEM_IO,
+                },
+                /* I2C */ {
+                        .phys_start = 0x01c2b000,
+                        .virt_start = 0x01c2b000,
+                        .size =       0x00000400,
+                        .flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
+                                JAILHOUSE_MEM_IO,
+                },
+                /* Ethernet */ {
+                        .phys_start = 0x01c30000,
+                        .virt_start = 0x01c30000,
+                        .size =       0x00010000,
+                        .flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
+                                JAILHOUSE_MEM_IO,
+                },
+                /* GPU */ {
+                        .phys_start = 0x01c40000,
+                        .virt_start = 0x01c40000,
+                        .size =       0x00010000,
+                        .flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
+                                JAILHOUSE_MEM_IO,
+                },
+                /* SRAM */ {
+                        .phys_start = 0x01d00000,
+                        .virt_start = 0x01d00000,
+                        .size =       0x00040000,
+                        .flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
+                                JAILHOUSE_MEM_EXECUTE,
+                },
+                /* HDMI */ {
+                        .phys_start = 0x01ee0000,
+                        .virt_start = 0x01ee0000,
+                        .size =       0x00010000,
+                        .flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
+                                JAILHOUSE_MEM_IO,
+                },
+                /* HDMI */ {
+                        .phys_start = 0x01ef0000,
+                        .virt_start = 0x01ef0000,
+                        .size =       0x00010000,
+                        .flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
+                                JAILHOUSE_MEM_IO,
+                },
+                /* RTC */ {
+                        .phys_start = 0x01f00000,
+                        .virt_start = 0x01f00000,
+                        .size =       0x00000400,
+                        .flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
+                                JAILHOUSE_MEM_IO,
+                },
+                /* Interrupt Controller */ {
+                        .phys_start = 0x01f00c00,
+                        .virt_start = 0x01f00c00,
+                        .size =       0x00000400,
+                        .flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
+                                JAILHOUSE_MEM_IO,
+                },
+                /* Clock */ {
+                        .phys_start = 0x01f01400,
+                        .virt_start = 0x01f01400,
+                        .size =       0x00000100,
+                        .flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
+                                JAILHOUSE_MEM_IO,
+                },
+                /* Pincontrol */ {
+                        .phys_start = 0x01f02c00,
+                        .virt_start = 0x01f02c00,
+                        .size =       0x00000400,
+                        .flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
+                                JAILHOUSE_MEM_IO,
+                },
+                /* RSB(Reduced Serial Bus) */ {
+                        .phys_start = 0x01f03400,
+                        .virt_start = 0x01f03400,
+                        .size =       0x00000400,
+                        .flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
+                                JAILHOUSE_MEM_IO,
+                },
+		/* System RAM */ {
 			.phys_start = 0x40000000,
 			.virt_start = 0x40000000,
 			.size = 0x7c000000,
