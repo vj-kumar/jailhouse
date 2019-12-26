@@ -1,0 +1,48 @@
+00018000-0003ffff : 18000.sram
+01000000-010fffff : 1000000.clock
+01100000-011fffff : 1100000.mixer
+01200000-012fffff : 1200000.mixer
+01c00000-01c00fff : 1c00000.syscon
+01c02000-01c02fff : 1c02000.dma-controller
+01c0c000-01c0cfff : 1c0c000.lcd-controller
+01c0d000-01c0dfff : 1c0d000.lcd-controller
+01c0f000-01c0ffff : 1c0f000.mmc
+01c14000-01c143ff : 1c14000.eeprom
+01c19000-01c193ff : usb@1c19000
+  01c19000-01c193ff : musb-hdrc.1.auto
+01c19400-01c19413 : 1c19400.phy
+01c1a000-01c1a0ff : 1c1a000.usb
+01c1a400-01c1a4ff : 1c1a400.usb
+01c1a800-01c1a803 : 1c19400.phy
+01c1b000-01c1b0ff : 1c1b000.usb
+01c1b400-01c1b4ff : 1c1b400.usb
+01c1b800-01c1b803 : 1c19400.phy
+01c20000-01c203ff : 1c20000.clock
+01c20800-01c20bff : 1c20800.pinctrl
+01c20ca0-01c20cbf : 1c20ca0.watchdog
+01c28000-01c2801f : serial
+01c2b000-01c2b3ff : 1c2b000.i2c
+01c30000-01c3ffff : 1c30000.ethernet
+01c40000-01c4ffff : 1c40000.gpu
+01d00000-01d3ffff : 1d00000.sram
+01ee0000-01eeffff : 1ee0000.hdmi
+01ef0000-01efffff : 1ee0000.hdmi
+01f00000-01f003ff : rtc@1f00000
+01f00c00-01f00fff : interrupt-controller@1f00c00
+01f01400-01f014ff : clock@1f01400
+01f02c00-01f02fff : 1f02c00.pinctrl
+01f03400-01f037ff : 1f03400.rsb
+40000000-bfffffff : System RAM
+  40080000-4119ffff : Kernel code
+  411a0000-4167ffff : reserved
+  41680000-418b5fff : Kernel data
+  49906000-4990cfff : reserved
+  4990f000-49ffffff : reserved
+  bb600000-bb9fffff : reserved
+  bbbd6000-bd9fffff : reserved
+  bda7d000-bdb7dfff : reserved
+  bdb7e000-bdbd5fff : reserved
+  bdbd8000-bdbd8fff : reserved
+  bdbd9000-bdbddfff : reserved
+  bdbde000-bfffffff : reserved
+
