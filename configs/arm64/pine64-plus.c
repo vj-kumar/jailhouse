@@ -52,12 +52,13 @@ struct {
 
 			.cpu_set_size = sizeof(config.cpus),
 			.num_memory_regions = ARRAY_SIZE(config.mem_regions),
+			.num_pci_devices = ARRAY_SIZE(config.pci_devices),
 			.num_irqchips = ARRAY_SIZE(config.irqchips),
 		},
 	},
 
 	.cpus = {
-		0xff,
+		0xf,
 	},
 
 	.mem_regions = {
@@ -295,7 +296,7 @@ struct {
 		/* System RAM */ {
 			.phys_start = 0x40000000,
 			.virt_start = 0x40000000,
-			.size = 0xbc000000,
+			.size = 0x7c000000,
 			.flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
 				JAILHOUSE_MEM_EXECUTE,
 		},
