@@ -263,28 +263,28 @@ struct {
                         .virt_start = 0x01f00000,
                         .size =       0x00000400,
                         .flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
-                                JAILHOUSE_MEM_IO,
+                                JAILHOUSE_MEM_IO | JAILHOUSE_MEM_IO_32,
                 },
                 /* Interrupt Controller */ {
                         .phys_start = 0x01f00c00,
                         .virt_start = 0x01f00c00,
                         .size =       0x00000400,
                         .flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
-                                JAILHOUSE_MEM_IO,
+                                JAILHOUSE_MEM_IO | JAILHOUSE_MEM_IO_32,
                 },
                 /* Clock */ {
                         .phys_start = 0x01f01400,
                         .virt_start = 0x01f01400,
                         .size =       0x00000100,
                         .flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
-                                JAILHOUSE_MEM_IO,
+                                JAILHOUSE_MEM_IO | JAILHOUSE_MEM_IO_32,
                 },
                 /* Pincontrol */ {
                         .phys_start = 0x01f02c00,
                         .virt_start = 0x01f02c00,
                         .size =       0x00000400,
                         .flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
-                                JAILHOUSE_MEM_IO,
+                                JAILHOUSE_MEM_IO | JAILHOUSE_MEM_IO_32,
                 },
                 /* RSB(Reduced Serial Bus) */ {
                         .phys_start = 0x01f03400,
