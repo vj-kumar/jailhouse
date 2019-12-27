@@ -28,7 +28,7 @@ struct {
 		.flags = JAILHOUSE_SYS_VIRTUAL_DEBUG_CONSOLE,
 		.hypervisor_memory = {
 			.phys_start = 0xbc000000,
-			.size = 0x4000000 - 0x100000, /* -1MB (PSCI) */
+			.size =       0x04000000,
 		},
 		.debug_console = {
 			.address = 0x01c28000,
@@ -295,7 +295,7 @@ struct {
 		/* System RAM */ {
 			.phys_start = 0x40000000,
 			.virt_start = 0x40000000,
-			.size = 0x7c000000,
+			.size = 0xbc000000,
 			.flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
 				JAILHOUSE_MEM_EXECUTE,
 		},

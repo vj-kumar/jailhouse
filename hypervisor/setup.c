@@ -47,30 +47,25 @@ static void init_early(unsigned int cpu_id)
 
 	arch_dbg_write_init();
 
-	printk( "\nVIJAI: init_early on %d CPU\n", cpu_id);
-	printk( "\nInitializing Jailhouse hypervisor %s on CPU %d\n",
+	printk("\nInitializing Jailhouse hypervisor %s on CPU %d\n",
 	       JAILHOUSE_VERSION, cpu_id);
-	printk( "Code location: %p\n", __text_start);
+	printk("Code location: %p\n", __text_start);
 
 	gcov_init();
 
 	error = paging_init();
-	printk( "\nVIJAI: init_early: paging_init %d\n", error);
 	if (error)
 		return;
-	printk( "\nVIJAI: init_early %d\n", __LINE__);
 
 	root_cell.config = &system_config->root_cell;
 
 	error = cell_init(&root_cell);
 	if (error)
 		return;
-	printk( "\nVIJAI: init_early %d\n", __LINE__);
 
 	error = arch_init_early();
 	if (error)
 		return;
-	printk( "\nVIJAI: init_early %d\n", __LINE__);
 
 	/*
 	 * Back the region of the hypervisor core and per-CPU page with empty
@@ -97,22 +92,19 @@ static void init_early(unsigned int cpu_id)
 			return;
 		hv_page.virt_start += PAGE_SIZE;
 	}
-	printk( "\nVIJAI: init_early %d\n", __LINE__);
 
 	paging_dump_stats("after early setup");
-	printk( "\nInitializing processors:\n");
+	printk("Initializing processors:\n");
 }
 
 static void cpu_init(struct per_cpu *cpu_data)
 {
 	int err = -EINVAL;
 
-	printk("\n VIJAI: cpu_init CPU %d... ", cpu_data->public.cpu_id);
-	printk("\nVIJAI: cpu_init %d\n", __LINE__);
+	printk(" CPU %d... ", cpu_data->public.cpu_id);
 
 	if (!cpu_id_valid(cpu_data->public.cpu_id))
 		goto failed;
-	printk("\nVIJAI: cpu_init %d\n", __LINE__);
 
 	cpu_data->public.cell = &root_cell;
 
@@ -125,7 +117,6 @@ static void cpu_init(struct per_cpu *cpu_data)
 	err = paging_create_hvpt_link(&cpu_data->pg_structs, JAILHOUSE_BASE);
 	if (err)
 		goto failed;
-	printk("\nVIJAI: cpu_init %d\n", __LINE__);
 
 	if (CON_IS_MMIO(system_config->debug_console.flags)) {
 		err = paging_create_hvpt_link(&cpu_data->pg_structs,
@@ -133,7 +124,6 @@ static void cpu_init(struct per_cpu *cpu_data)
 		if (err)
 			goto failed;
 	}
-	printk("\nVIJAI: cpu_init %d\n", __LINE__);
 
 	/* set up private mapping of per-CPU data structure */
 	err = paging_create(&cpu_data->pg_structs, paging_hvirt2phys(cpu_data),
@@ -141,12 +131,10 @@ static void cpu_init(struct per_cpu *cpu_data)
 			    PAGE_DEFAULT_FLAGS, PAGING_NON_COHERENT);
 	if (err)
 		goto failed;
-	printk("\nVIJAI: cpu_init %d\n", __LINE__);
 
 	err = arch_cpu_init(cpu_data);
 	if (err)
 		goto failed;
-	printk("\nVIJAI: cpu_init %d\n", __LINE__);
 
 	/* Make sure any remappings to the temporary regions can be performed
 	 * without allocations of page table pages. */
@@ -156,7 +144,6 @@ static void cpu_init(struct per_cpu *cpu_data)
 			    PAGING_NON_COHERENT);
 	if (err)
 		goto failed;
-	printk("\nVIJAI: cpu_init %d\n", __LINE__);
 
 	printk("OK\n");
 
@@ -167,7 +154,6 @@ static void cpu_init(struct per_cpu *cpu_data)
 	 */
 	memory_barrier();
 	initialized_cpus++;
-	printk("\nVIJAI: cpu_init: initialized cpu %d\n", initialized_cpus);
 	return;
 
 failed:
@@ -219,8 +205,6 @@ int entry(unsigned int cpu_id, struct per_cpu *cpu_data)
 	bool master = false;
 
 	cpu_data->public.cpu_id = cpu_id;
-	printk( "\nVIJAI: setup %d\n", __LINE__);
-	printk( "\nVIJAI: cpuid %d\n", cpu_id);
 
 	spin_lock(&init_lock);
 
@@ -245,11 +229,9 @@ int entry(unsigned int cpu_id, struct per_cpu *cpu_data)
 		master = true;
 		init_early(cpu_id);
 	}
-	printk( "\nVIJAI: entry %d\n", __LINE__);
 
 	if (!error)
 		cpu_init(cpu_data);
-	printk( "\nVIJAI: entry %d\n", __LINE__);
 
 	spin_unlock(&init_lock);
 
@@ -270,7 +252,6 @@ int entry(unsigned int cpu_id, struct per_cpu *cpu_data)
 		while (!error && !activate)
 			cpu_relax();
 	}
-	printk( "\nVIJAI: entry %d\n", __LINE__);
 
 	if (error) {
 		if (master)
@@ -278,10 +259,9 @@ int entry(unsigned int cpu_id, struct per_cpu *cpu_data)
 		arch_cpu_restore(cpu_id, error);
 		return error;
 	}
-	printk( "\nVIJAI: entry %d\n", __LINE__);
 
 	if (master)
-		printk( "\nActivating hypervisor\n");
+		printk("Activating hypervisor\n");
 
 	/* point of no return */
 	arch_cpu_activate_vmm();

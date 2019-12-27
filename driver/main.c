@@ -230,19 +230,14 @@ static void enter_hypervisor(void *info)
 	unsigned int cpu = smp_processor_id();
 	int (*entry)(unsigned int);
 	int err;
-	pr_err("VIJAI:CPU is %d\n",cpu);
 
 	entry = header->entry + (unsigned long) hypervisor_mem;
-	pr_err("VIJAI: %lx\n",(unsigned long)hypervisor_mem);
 
 	if (cpu < header->max_cpus)
 		/* either returns 0 or the same error code across all CPUs */
 		err = entry(cpu);
-	else{
-		pr_err("VIJAI: %d\n",__LINE__);
+	else
 		err = -EINVAL;
-	}
-	pr_err("VIJAI: ERROR is %d\n",err);
 
 	if (err)
 		error_code = err;
@@ -388,10 +383,8 @@ static int jailhouse_cmd_enable(struct jailhouse_system __user *arg)
 	max_cpus = get_max_cpus(config_header.root_cell.cpu_set_size, arg);
 	if (max_cpus < 0)
 		return max_cpus;
-	if (max_cpus > UINT_MAX) {
-		pr_err("jailhouse: max_cpus > UINI_MAX\n");
+	if (max_cpus > UINT_MAX)
 		return -EINVAL;
-	}
 
 	if (mutex_lock_interruptible(&jailhouse_lock) != 0)
 		return -EINTR;
@@ -433,12 +426,10 @@ static int jailhouse_cmd_enable(struct jailhouse_system __user *arg)
 	header = (struct jailhouse_header *)hypervisor->data;
 
 	err = -EINVAL;
-	pr_err("VIJAI: %d\n",__LINE__);
 	if (memcmp(header->signature, JAILHOUSE_SIGNATURE,
 		   sizeof(header->signature)) != 0 ||
 	    hypervisor->size >= hv_mem->size)
 		goto error_release_fw;
-	pr_err("VIJAI: %d\n",__LINE__);
 
 	hv_core_and_percpu_size = header->core_size +
 		max_cpus * header->percpu_size;
@@ -446,7 +437,6 @@ static int jailhouse_cmd_enable(struct jailhouse_system __user *arg)
 	if (hv_core_and_percpu_size >= hv_mem->size ||
 	    config_size >= hv_mem->size - hv_core_and_percpu_size)
 		goto error_release_fw;
-	pr_err("VIJAI: %d\n",__LINE__);
 
 #ifdef JAILHOUSE_BORROW_ROOT_PT
 	remap_addr = JAILHOUSE_BASE;
@@ -465,7 +455,6 @@ static int jailhouse_cmd_enable(struct jailhouse_system __user *arg)
 			  "\"memmap=\" or \"mem=\"?\n");
 		goto error_release_fw;
 	}
-	pr_err("VIJAI: %d\n",__LINE__);
 
 	/* Map physical memory region reserved for Jailhouse. */
 	hypervisor_mem = jailhouse_ioremap(hv_mem->phys_start, remap_addr,
@@ -475,7 +464,6 @@ static int jailhouse_cmd_enable(struct jailhouse_system __user *arg)
 		       "at %08lx\n", (unsigned long)hv_mem->phys_start);
 		goto error_release_memreg;
 	}
-	pr_err("VIJAI: %d\n",__LINE__);
 
 	console_page = (struct jailhouse_virt_console*)
 		(hypervisor_mem + header->console_page);
@@ -502,7 +490,6 @@ static int jailhouse_cmd_enable(struct jailhouse_system __user *arg)
 	err = jailhouse_sysfs_core_init(jailhouse_dev, header->core_size);
 	if (err)
 		goto error_unmap;
-	pr_err("VIJAI: %d\n",__LINE__);
 
 	/*
 	 * ARMv8 requires to clean D-cache and invalidate I-cache for memory
@@ -521,7 +508,6 @@ static int jailhouse_cmd_enable(struct jailhouse_system __user *arg)
 		err = -EFAULT;
 		goto error_unmap;
 	}
-	pr_err("VIJAI: %d\n",__LINE__);
 
 	if (config->debug_console.clock_reg) {
 		clock_reg = ioremap(config->debug_console.clock_reg,
@@ -543,7 +529,6 @@ static int jailhouse_cmd_enable(struct jailhouse_system __user *arg)
 
 		iounmap(clock_reg);
 	}
-	pr_err("VIJAI: %d\n",__LINE__);
 
 #ifdef JAILHOUSE_BORROW_ROOT_PT
 	if (CON_IS_MMIO(config->debug_console.flags)) {
@@ -575,7 +560,6 @@ static int jailhouse_cmd_enable(struct jailhouse_system __user *arg)
 	err = jailhouse_cell_prepare_root(&config->root_cell);
 	if (err)
 		goto error_unmap;
-	pr_err("VIJAI: %d\n",__LINE__);
 
 	error_code = 0;
 
@@ -594,7 +578,6 @@ static int jailhouse_cmd_enable(struct jailhouse_system __user *arg)
 		err = error_code;
 		goto error_free_cell;
 	}
-	pr_err("VIJAI: %d\n",__LINE__);
 
 	if (console)
 		iounmap(console);
