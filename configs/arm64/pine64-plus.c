@@ -74,7 +74,7 @@ struct {
                         .virt_start = 0x01000000,
                         .size =       0x00100000,
                         .flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
-                                JAILHOUSE_MEM_IO,
+                                JAILHOUSE_MEM_IO | JAILHOUSE_MEM_IO_32,
                 },
                 /* 1100000.mixer */ {
                         .phys_start = 0x01100000,
@@ -193,28 +193,28 @@ struct {
                         .virt_start = 0x01c20000,
                         .size =       0x00000400,
                         .flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
-                                JAILHOUSE_MEM_IO,
+                                JAILHOUSE_MEM_IO | JAILHOUSE_MEM_IO_32,
                 },
                 /* Pincontrol */ {
                         .phys_start = 0x01c20800,
                         .virt_start = 0x01c20800,
                         .size =       0x00000400,
                         .flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
-                                JAILHOUSE_MEM_IO,
+                                JAILHOUSE_MEM_IO | JAILHOUSE_MEM_IO_32,
                 },
                 /* Watchdog */ {
                         .phys_start = 0x01c20ca0,
                         .virt_start = 0x01c20ca0,
                         .size =       0x00000020,
                         .flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
-                                JAILHOUSE_MEM_IO,
+                                JAILHOUSE_MEM_IO | JAILHOUSE_MEM_IO_32,
                 },
                 /* UART */ {
                         .phys_start = 0x01c28000,
                         .virt_start = 0x01c28000,
                         .size =       0x00000020,
                         .flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
-                                JAILHOUSE_MEM_IO,
+                                JAILHOUSE_MEM_IO | JAILHOUSE_MEM_IO_32,
                 },
                 /* I2C */ {
                         .phys_start = 0x01c2b000,
