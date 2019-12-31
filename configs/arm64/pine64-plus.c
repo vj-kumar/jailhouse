@@ -38,6 +38,9 @@ struct {
 				 JAILHOUSE_CON_REGDIST_4,
 		},
 		.platform_info = {
+			.pci_mmconfig_base = 0xfc000000,
+			.pci_mmconfig_end_bus = 0,
+			.pci_is_virtual = 1,
 			.arm = {
 				.gic_version = 2,
 				.gicd_base = 0x01c81000,
