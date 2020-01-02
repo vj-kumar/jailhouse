@@ -35,7 +35,7 @@ struct {
 		.num_irqchips = ARRAY_SIZE(config.irqchips),
 		.num_pci_devices = ARRAY_SIZE(config.pci_devices),
 
-		.vpci_irq_base = 123,
+		.vpci_irq_base = 136,
 
 		.console = {
 			.address = 0x01c28000,
@@ -50,12 +50,13 @@ struct {
 	},
 
 	.mem_regions = {
-		/* UART 0-3 */ {
+		/* UART 0 */ {
 			.phys_start = 0x01c28000,
 			.virt_start = 0x01c28000,
-			.size = 0x1000,
+			.size = 0x0020,
 			.flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
-				JAILHOUSE_MEM_IO | JAILHOUSE_MEM_ROOTSHARED,
+				JAILHOUSE_MEM_IO | JAILHOUSE_MEM_IO_32 |
+				JAILHOUSE_MEM_ROOTSHARED,
 		},
 		/* RAM */ {
 			.phys_start = 0xbbef0000,
