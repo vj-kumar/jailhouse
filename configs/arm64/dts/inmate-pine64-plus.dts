@@ -33,19 +33,19 @@
 		#address-cells = <1>;
 		#size-cells = <0>;
 
-		cpu@2 {
-			compatible = "arm,cortex-a53";
-			device_type = "cpu";
-			reg = <2>;
-			enable-method = "psci";
-		};
-
 		cpu@3 {
 			compatible = "arm,cortex-a53";
 			device_type = "cpu";
 			reg = <3>;
 			enable-method = "psci";
+			next-level-cache = <&L2>;
 		};
+
+		L2: l2-cache {
+                        compatible = "cache";
+                        cache-level = <2>;
+                };
+
 	};
 
 	psci {
@@ -107,8 +107,8 @@
 				<0 0 0 2 &gic GIC_SPI 137 IRQ_TYPE_EDGE_RISING>,
 				<0 0 0 3 &gic GIC_SPI 138 IRQ_TYPE_EDGE_RISING>,
 				<0 0 0 4 &gic GIC_SPI 139 IRQ_TYPE_EDGE_RISING>;
-		reg = <0x0 0xfc000000 0x0 0x100000>;
+		reg = <0xfc000000 0x100000>;
 		ranges =
-			<0x02000000 0x00 0x10000000 0x10000000 0x00 0x10000>;
+			<0x02000000 0x00 0x10000000 0x10000000 0x0 0x10000>;
 	};
 };
