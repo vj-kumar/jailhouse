@@ -35,7 +35,7 @@ struct {
 		.num_irqchips = ARRAY_SIZE(config.irqchips),
 		.num_pci_devices = ARRAY_SIZE(config.pci_devices),
 
-		.vpci_irq_base = 136,
+		.vpci_irq_base = 123,
 
 		.console = {
 			.address = 0x01c28000,
