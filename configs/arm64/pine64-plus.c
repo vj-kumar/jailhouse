@@ -33,7 +33,7 @@ struct {
 		.debug_console = {
 			.address = 0x01c28000,
 			.size = 0x400,
-			.type = JAILHOUSE_CON_TYPE_PL011,
+			.type = JAILHOUSE_CON_TYPE_8250,
 			.flags = JAILHOUSE_CON_ACCESS_MMIO |
 				 JAILHOUSE_CON_REGDIST_4,
 		},
