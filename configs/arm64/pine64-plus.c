@@ -38,9 +38,10 @@ struct {
 				 JAILHOUSE_CON_REGDIST_4,
 		},
 		.platform_info = {
-			.pci_mmconfig_base = 0xfc000000,
+			.pci_mmconfig_base = 0x02000000,
 			.pci_mmconfig_end_bus = 0,
 			.pci_is_virtual = 1,
+			.pci_domain = 1,
 			.arm = {
 				.gic_version = 2,
 				.gicd_base = 0x01c81000,
@@ -366,7 +367,7 @@ struct {
 			.domain = 1,
 			.bdf = 1 << 3,
 			.bar_mask = JAILHOUSE_IVSHMEM_BAR_MASK_INTX,
-			.shmem_regions_start = 0,
+			.shmem_regions_start = 5,
 			.shmem_dev_id = 0,
 			.shmem_peers = 2,
 			.shmem_protocol = JAILHOUSE_SHMEM_PROTO_VETH,

@@ -30,8 +30,9 @@ struct {
 
 		.cpu_set_size = sizeof(config.cpus),
 		.num_memory_regions = ARRAY_SIZE(config.mem_regions),
-		.num_irqchips = 0,
-		.num_pci_devices = 0,
+		.num_pci_devices = ARRAY_SIZE(config.pci_devices),
+		.num_irqchips = ARRAY_SIZE(config.irqchips),
+		.vpci_irq_base = 125,
 
 		.console = {
 			.address = 0x1c28000,
